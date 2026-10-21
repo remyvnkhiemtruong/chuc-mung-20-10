@@ -13,8 +13,8 @@ const head = (title, description, prefix = './', photo) => `<!doctype html>
   ${photo ? `<meta property="og:image" content="${config.baseUrl}assets/photos/${photo}-960.webp">` : ''}
   <title>${esc(title)}</title><link rel="icon" href="${prefix}assets/flower.svg" type="image/svg+xml">
   <link rel="preload" href="${prefix}assets/fonts/be-vietnam-pro-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="${prefix}assets/fonts.css"><link rel="stylesheet" href="${prefix}assets/style.css?v=5">
-  <link rel="stylesheet" href="${prefix}assets/flowers.css?v=5">
+  <link rel="stylesheet" href="${prefix}assets/fonts.css"><link rel="stylesheet" href="${prefix}assets/style.css?v=6">
+  <link rel="stylesheet" href="${prefix}assets/flowers.css?v=6">
 </head>`;
 const flowerColors = ['#ef79ad', '#f4c045', '#af84db', '#70bca4', '#79a9e2', '#f4956b'];
 const bloom = (color, size = 58) => `<span class="bloom" style="--flower-color:${color};--flower-size:${size}px"><span class="flower-petals">${Array.from({length:8}, (_, i) => `<i class="flower-petal" style="--i:${i}"></i>`).join('')}</span><i class="flower-heart"></i></span>`;
@@ -30,7 +30,7 @@ const garden = r => `<section class="flower-garden reveal" id="flower-garden" ar
 </section>`;
 const masthead = `<header class="masthead"><span class="wordmark">Khiêm gửi<span aria-hidden="true">✳</span></span><span class="occasion">Ngày Phụ nữ Việt Nam</span><div class="header-controls"><button class="effects-toggle" id="effects-toggle" aria-pressed="true" aria-label="Hiệu ứng bật, nhấn để tắt chuyển động">Hiệu ứng bật</button><span class="header-date">20.10</span></div></header>`;
 const footer = `<footer><span>Chúc mừng ngày Phụ nữ Việt Nam.</span><span>${esc(config.sender)}</span></footer>`;
-const end = prefix => `<p class="toast" role="status" aria-live="polite"></p><script src="${prefix}assets/app.js?v=5" defer></script><script src="${prefix}assets/flowers.js?v=5" defer></script></body></html>`;
+const end = prefix => `<p class="toast" role="status" aria-live="polite"></p><script src="${prefix}assets/app.js?v=6" defer></script><script src="${prefix}assets/flowers.js?v=6" defer></script></body></html>`;
 const photo = (r, prefix = '../', lazy = false) => `<img
   src="${prefix}assets/photos/${r.slug}-960.webp"
   srcset="${prefix}assets/photos/${r.slug}-480.webp 480w, ${prefix}assets/photos/${r.slug}-960.webp 960w"
