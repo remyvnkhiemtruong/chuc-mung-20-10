@@ -1,0 +1,1 @@
+{"name":"gui-thuong-20-10","version":"1.0.0","private":true,"scripts":{"build":"node scripts/build.mjs","dev":"python -m http.server 4173 --directory public"},"devDependencies":{"qrcode":"^1.5.4","lighthouse":"^13.0.0"}}
