@@ -7,70 +7,102 @@
       "name": "Lê Thanh Bảo Uyên",
       "shortName": "Bảo Uyên",
       "theme": "rose",
-      "flower": "Một đóa hoa dành riêng cho Uyên",
-      "headline": "Mong Uyên luôn rạng rỡ theo cách của mình.",
-      "intro": "Một chút dịu dàng, một lời chúc thật lòng, gửi đến Uyên trong ngày 20/10.",
+      "headline": "20/10 vui nhé.",
+      "intro": "Khiêm gửi Uyên một tấm thiệp nhân ngày 20/10.",
       "paragraphs": [
-        "Bảo Uyên thân mến,",
-        "Nhân ngày Phụ nữ Việt Nam 20/10, Khiêm chúc Uyên thật nhiều niềm vui, sức khỏe và những ngày bình yên. Mong Uyên luôn giữ được nụ cười rạng rỡ và niềm háo hức với những điều mình yêu thích.",
-        "Chúc Uyên học thật tốt ngành Giáo dục Mầm non tại Trường Đại học Sư phạm Thành phố Hồ Chí Minh. Mong những giờ học, những lần thực hành và trải nghiệm cùng các bé sẽ mang đến cho Uyên thật nhiều niềm vui, giúp Uyên thêm vững vàng trên con đường trở thành cô giáo mầm non.",
-        "Chúc cô giáo tương lai luôn có đủ kiên nhẫn, sự sáng tạo và một trái tim ấm áp để đồng hành cùng những mầm non nhỏ. Và khi dành sự dịu dàng cho các bé, Uyên cũng nhớ dành một phần yêu thương cho chính mình nhé.",
-        "Chúc Uyên một ngày 20/10 thật đẹp, được quan tâm và trân trọng thật nhiều!"
+        "20/10, chúc Uyên thật vui nha. Mong hôm nay Uyên được ăn món mình thích, gặp người mình quý và có một ngày thật thoải mái.",
+        "Chúc cô giáo mầm non tương lai học tốt, có nhiều kỷ niệm vui cùng các bé. Mong Uyên sẽ luôn thích con đường mình đã chọn.",
+        "Chúc Uyên có nhiều chuyện vui để kể, và những điều đang mong sớm thành hiện thực nhé."
       ],
-      "wish": "Mong niềm vui ghé thăm Uyên, hôm nay và cả những ngày sau nữa."
+      "wish": "Chúc Uyên học vui, ngủ ngon, cười nhiều.",
+      "displayName": "Bảo Uyên,",
+      "photoAlt": "Bảo Uyên mặc áo dài trắng giữa khu vườn xanh.",
+      "photoRatio": "4 / 5",
+      "photoPosition": "50% 38%",
+      "letterTitle": "Uyên ơi,",
+      "extraWishes": [
+        "Chúc Uyên gặp một đề thi vừa sức và những ngày học thật vui.",
+        "Mong Uyên luôn có người để kể chuyện sau một ngày dài.",
+        "Chúc cô giáo tương lai có nhiều kỷ niệm đẹp cùng các bé.",
+        "Hôm nay tự thưởng một món mình thích nhé, Uyên."
+      ]
     },
     {
       "slug": "kim-phuong",
       "name": "Phạm Thị Kim Phượng",
       "shortName": "Kim Phượng",
       "theme": "apricot",
-      "flower": "Một đóa hoa dành riêng cho chị Phượng",
-      "headline": "Chúc chị Phượng một ngày đầy nắng và niềm vui.",
-      "intro": "Một lời chúc nhỏ em gửi đến chị Phượng, cùng những điều tốt đẹp trong ngày 20/10.",
+      "headline": "20/10 thật vui.",
+      "intro": "Em gửi chị một tấm thiệp, kèm vài lời chúc nhân ngày 20/10.",
       "paragraphs": [
-        "Gửi chị Kim Phượng,",
-        "Nhân ngày Phụ nữ Việt Nam 20/10, em chúc chị thật nhiều sức khỏe, niềm vui và luôn được yêu thương. Mong chị có một ngày thật dễ chịu, được làm điều mình thích và nhận về những lời chúc ấm áp.",
-        "Chúc chị học thật tốt ngành Ngôn ngữ Pháp, ngày càng tự tin khi nghe, nói, đọc, viết và tìm thấy nhiều điều thú vị trong ngôn ngữ cũng như văn hóa Pháp. Mong những giờ học, những đoạn hội thoại và cả những bài khó đều dần trở thành những trải nghiệm đáng nhớ.",
-        "Em chúc hành trình cùng tiếng Pháp sẽ mở ra cho chị nhiều cơ hội đẹp, những cuộc gặp gỡ mới và thêm nhiều lý do để tự hào về chính mình. Dù bận học đến đâu, chị cũng nhớ dành thời gian nghỉ ngơi và chăm sóc bản thân nhé.",
-        "Chúc chị Phượng một ngày 20/10 thật rạng rỡ. Bonne fête à vous !"
+        "20/10, em chúc chị Phượng luôn khỏe, vui vẻ và gặp nhiều may mắn. Hôm nay chị tự thưởng cho mình một món gì thật thích nhé.",
+        "Chúc chị học tiếng Pháp thuận lợi, sớm làm được những điều chị đang dự định. Mong chị có thêm nhiều chuyến đi và những buổi chiều ngắm biển thật đẹp.",
+        "Em chúc chị một ngày 20/10 thật vui. Bonne fête, chị Phượng!"
       ],
-      "wish": "Mong mỗi ngày của chị Phượng đều có một điều đáng để mỉm cười.",
-      "addressName": "chị Kim Phượng"
+      "wish": "Chúc chị có thêm nhiều buổi chiều đẹp như trong ảnh.",
+      "addressName": "chị Kim Phượng",
+      "displayName": "Chị Phượng,",
+      "photoAlt": "Chị Kim Phượng đứng ngắm biển lúc hoàng hôn.",
+      "photoRatio": "1 / 1",
+      "photoPosition": "50% 50%",
+      "letterTitle": "Chị Phượng ơi,",
+      "extraWishes": [
+        "Chúc chị nói tiếng Pháp ngày càng tự tin.",
+        "Mong chị sớm có dịp đến một nơi mình đã muốn đi từ lâu.",
+        "Chúc chị có một buổi tối thảnh thơi, không vướng bài vở.",
+        "Hôm nay chị tự thưởng cho mình một món ngon nhé."
+      ]
     },
     {
       "slug": "huyen-diu",
       "name": "Nguyễn Dương Huyền Dịu",
       "shortName": "Huyền Dịu",
       "theme": "lilac",
-      "flower": "Một đóa hoa dành riêng cho Dịu",
-      "headline": "Gửi Dịu một ngày thật êm và thật vui.",
-      "intro": "Một lá thư nhỏ cho Dịu, cùng lời chúc về những điều bình yên và tốt đẹp.",
+      "headline": "hôm nay vui nhé.",
+      "intro": "Một tấm thiệp Khiêm làm riêng cho Dịu nhân ngày 20/10.",
       "paragraphs": [
-        "Huyền Dịu thân mến,",
-        "Chúc Dịu một ngày 20/10 ngập tràn niềm vui và yêu thương. Khiêm mong Dịu luôn khỏe mạnh, tự tin và có thật nhiều khoảnh khắc bình yên bên những người mình quý mến.",
-        "Chúc Dịu học thật tốt ngành Quản lý Giáo dục, luôn tìm thấy cảm hứng trong những điều đang học và thêm tự tin với con đường mình đã chọn. Mong mỗi bài học, mỗi trải nghiệm sẽ giúp Dịu hiểu hơn về con người và cách xây dựng một môi trường học tập tốt đẹp.",
-        "Chúc Dịu vừa có sự vững vàng để sắp xếp, dẫn dắt công việc, vừa giữ được sự lắng nghe và thấu hiểu dành cho mọi người. Mong những dự định của Dịu sẽ dần thành hiện thực, từng bước một, theo nhịp của riêng mình.",
-        "Giữa những ngày bận rộn, nhớ nghỉ ngơi và chăm sóc bản thân nữa nhé. Chúc Dịu một ngày Phụ nữ Việt Nam thật vui!"
+        "Chúc Dịu 20/10 thật vui nha. Mong hôm nay Dịu có một buổi đi chơi vui, một bữa ăn ngon, hay đơn giản là được nghỉ ngơi cho thoải mái.",
+        "Chúc những việc Dịu đang cố gắng sẽ có kết quả tốt. Có chuyện khó thì từ từ tính, còn hôm nay cứ vui trước đã.",
+        "Khiêm chúc Dịu luôn khỏe, gặp nhiều người tốt và có nhiều chuyện vui để kể nhé."
       ],
-      "wish": "Mong Dịu luôn tìm thấy bình yên trong những điều nhỏ bé."
+      "wish": "Mong Dịu có một ngày vui từ sáng đến tối.",
+      "displayName": "Huyền Dịu,",
+      "photoAlt": "Ảnh chân dung Huyền Dịu bên cửa sổ.",
+      "photoRatio": "1 / 1",
+      "photoPosition": "50% 50%",
+      "letterTitle": "Dịu ơi,",
+      "extraWishes": [
+        "Chúc Dịu học hành thuận lợi, thi cử vừa sức.",
+        "Mong Dịu có thêm nhiều người bạn hợp ý để cùng học, cùng vui.",
+        "Chúc những dự định của Dịu sớm có tin tốt.",
+        "Hôm nay dành một buổi cho điều mình thích nhé, Dịu."
+      ]
     },
     {
       "slug": "nguyet-anh",
       "name": "Trần Nguyệt Ánh",
       "shortName": "Nguyệt Ánh",
       "theme": "sage",
-      "flower": "Một đóa hoa dành riêng cho chị Ánh",
-      "headline": "Mong chị Ánh luôn tự tin và hạnh phúc.",
-      "intro": "Nhân một ngày đặc biệt, em gửi chị Ánh một tấm thiệp nhỏ cùng lời chúc thật lòng.",
+      "headline": "20/10 vui nhé chị.",
+      "intro": "Em có vài lời chúc gửi chị, qua một tấm thiệp nhỏ.",
       "paragraphs": [
-        "Gửi chị Nguyệt Ánh,",
-        "Nhân ngày Phụ nữ Việt Nam, em chúc chị một ngày 20/10 thật vui, nhiều sức khỏe và đầy ắp những điều dễ thương. Mong chị luôn cảm nhận được sự quan tâm, trân trọng từ những người bên cạnh.",
-        "Chúc chị học thật tốt ngành Ngôn ngữ Pháp, luôn có hứng thú khám phá những cách diễn đạt mới và thêm tự tin mỗi lần sử dụng tiếng Pháp. Mong ngôn ngữ này sẽ đưa chị đến gần hơn với những dự định, những vùng đất và những trải nghiệm mà chị mong muốn.",
-        "Em chúc chị có đủ kiên nhẫn với những bài học khó, đủ can đảm để thử sức với cơ hội mới và luôn giữ được niềm vui trên hành trình ấy. Những lúc mệt, chị hãy cho mình một khoảng nghỉ và đối xử thật tốt với bản thân nhé.",
-        "Chúc chị Ánh luôn rạng rỡ, bình an và hạnh phúc theo cách của riêng mình. Plein de bonheur à vous !"
+        "20/10, em chúc chị Ánh nhiều sức khỏe và thật nhiều niềm vui. Mong hôm nay chị nhận được nhiều lời chúc, được rủ đi ăn ngon và có một ngày thật vui.",
+        "Chúc chị học tiếng Pháp ngày càng tự tin, những dự định sắp tới đều thuận lợi. Em mong chị có thêm nhiều dịp đi chơi, chụp ảnh và làm những điều chị thích.",
+        "Chúc mừng 20/10, chị Ánh. Chúc chị hôm nay vui, ngày mai cũng vậy!"
       ],
-      "wish": "Mong những điều tốt đẹp sẽ đến với chị Ánh, theo cách thật dịu dàng.",
-      "addressName": "chị Nguyệt Ánh"
+      "wish": "Chúc chị hôm nay vui, ngày mai cũng vậy.",
+      "addressName": "chị Nguyệt Ánh",
+      "displayName": "Chị Ánh,",
+      "photoAlt": "Ảnh chân dung chị Nguyệt Ánh trong áo màu hồng.",
+      "photoRatio": "1 / 1",
+      "photoPosition": "50% 50%",
+      "letterTitle": "Chị Ánh ơi,",
+      "extraWishes": [
+        "Chúc chị học tiếng Pháp ngày càng tiến bộ.",
+        "Mong chị sớm làm được một điều đã ấp ủ từ lâu.",
+        "Chúc chị gặp nhiều người tốt và có nhiều chuyện vui để kể.",
+        "Hôm nay chị dành chút thời gian cho bản thân nhé."
+      ]
     }
   ]
 }

@@ -1,19 +1,95 @@
 import fs from 'node:fs/promises';
 import QRCode from 'qrcode';
+
 const config = JSON.parse(await fs.readFile('recipients.json', 'utf8'));
-const escape = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const head = (title, description, prefix = './') => `<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f6f3ef"><meta name="description" content="${escape(description)}"><meta name="robots" content="noindex,nofollow"><title>${escape(title)}</title><link rel="icon" href="${prefix}assets/flower.svg" type="image/svg+xml"><link rel="stylesheet" href="${prefix}assets/fonts.css"><link rel="stylesheet" href="${prefix}assets/style.css?v=2"></head>`;
-const blossom = `<div class="botanical" aria-hidden="true"><div class="flower-stem"></div><div class="leaf leaf-one"></div><div class="leaf leaf-two"></div><div class="bloom">${Array.from({length:8},(_,i)=>`<i class="petal" style="--i:${i}"></i>`).join('')}<i class="flower-center"></i></div><div class="bud bud-one"></div><div class="bud bud-two"></div><span class="botanical-note">một chút hoa, một chút thương</span></div>`;
-await fs.mkdir('public/qr', {recursive:true});
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const address = r => r.addressName || r.shortName;
+const head = (title, description, prefix = './', photo) => `<!doctype html>
+<html lang="vi"><head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f5f3ee"><meta name="description" content="${esc(description)}">
+  <meta name="robots" content="noindex,nofollow"><meta property="og:title" content="${esc(title)}">
+  <meta property="og:description" content="${esc(description)}">
+  ${photo ? `<meta property="og:image" content="${config.baseUrl}assets/photos/${photo}-960.webp">` : ''}
+  <title>${esc(title)}</title><link rel="icon" href="${prefix}assets/flower.svg" type="image/svg+xml">
+  <link rel="preload" href="${prefix}assets/fonts/be-vietnam-pro-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="${prefix}assets/fonts.css"><link rel="stylesheet" href="${prefix}assets/style.css?v=3">
+</head>`;
+const masthead = `<header class="masthead"><span class="wordmark">Khiêm gửi<span aria-hidden="true">✳</span></span><span class="occasion">Ngày Phụ nữ Việt Nam</span><span class="header-date">20.10</span></header>`;
+const footer = `<footer><span>Chúc mừng ngày Phụ nữ Việt Nam.</span><span>${esc(config.sender)}</span></footer>`;
+const end = prefix => `<p class="toast" role="status" aria-live="polite"></p><script src="${prefix}assets/app.js?v=3" defer></script></body></html>`;
+const photo = (r, prefix = '../', lazy = false) => `<img
+  src="${prefix}assets/photos/${r.slug}-960.webp"
+  srcset="${prefix}assets/photos/${r.slug}-480.webp 480w, ${prefix}assets/photos/${r.slug}-960.webp 960w"
+  sizes="${lazy ? '(max-width: 640px) 90vw, 42vw' : '(max-width: 760px) 88vw, (max-width: 1200px) 43vw, 480px'}"
+  width="${r.slug === 'bao-uyen' ? 1366 : 828}" height="${r.slug === 'bao-uyen' ? 2048 : 828}"
+  alt="${esc(r.photoAlt)}" ${lazy ? 'loading="lazy"' : 'fetchpriority="high"'} decoding="async">`;
+
+await fs.mkdir('public/qr', { recursive: true });
 for (const r of config.recipients) {
-  const path = `public/${r.slug}`;
-  await fs.mkdir(path, {recursive:true});
-  const html = `${head(`Gửi ${r.shortName} | Chúc mừng 20/10`,r.intro,'../')}<body class="${r.theme}"><div class="page-wrap"><header class="masthead"><a class="wordmark" href="#" aria-label="Gửi thương, thiệp chúc mừng 20 tháng 10">gửi thương<span class="wordmark-flower" aria-hidden="true">✳</span></a><span class="occasion">NGÀY PHỤ NỮ VIỆT NAM</span><span class="header-date">20 / 10</span></header><main><section class="hero"><div class="hero-copy"><p class="eyebrow">DÀNH RIÊNG CHO</p><p class="recipient-name">${escape(r.name)}</p><h1>${escape(r.headline)}</h1><p class="intro">${escape(r.intro)}</p><button class="primary" id="open-letter" aria-controls="letter" aria-expanded="false">Mở lời chúc của Khiêm <span aria-hidden="true">↗</span></button><p class="sender-line">${r.addressName ? "Em gửi chị, với sự chân thành." : `Từ ${escape(config.sender)}, với sự chân thành.`}</p></div><div class="flower-art">${blossom}<p class="art-caption">${escape(r.flower)}</p></div></section><section class="letter-section" id="letter" hidden tabindex="-1" aria-labelledby="letter-title"><div class="letter-top"><p class="eyebrow">MỘT LÁ THƯ NHỎ</p><span>20 tháng 10</span></div><h2 id="letter-title">Chúc mừng ngày của ${escape(r.addressName || r.shortName)}.</h2><div class="letter-body">${r.paragraphs.map(p=>`<p>${escape(p)}</p>`).join('')}</div><div class="signature"><span>${r.addressName ? "Em Khiêm," : "Thân mến,"}</span><strong>${escape(config.sender)}</strong></div><button class="secondary" id="keep-wish">Giữ lại lời chúc này <span aria-hidden="true">↓</span></button></section><section class="wish-strip"><span class="small-flower" aria-hidden="true">✳</span><p>${escape(r.wish)}</p><span class="wish-date">20.10</span></section></main><footer><span>Một món quà nhỏ, gửi bằng cả tấm lòng.</span><span>${escape(config.sender)}</span></footer></div><div class="petal-rain" aria-hidden="true"></div><p class="toast" role="status" aria-live="polite"></p><script src="../assets/app.js" defer></script></body></html>`;
-  await fs.writeFile(`${path}/index.html`, html);
-  await QRCode.toFile(`public/qr/${r.slug}.png`,new URL(`${r.slug}/`,config.baseUrl).href,{width:1000,margin:4,errorCorrectionLevel:'M',color:{dark:'#25342c',light:'#ffffff'}});
-  await QRCode.toFile(`public/qr/${r.slug}.svg`,new URL(`${r.slug}/`,config.baseUrl).href,{type:'svg',margin:4,errorCorrectionLevel:'M',color:{dark:'#25342c',light:'#ffffff'}});
+  await fs.mkdir(`public/${r.slug}`, { recursive: true });
+  const html = `${head(`Gửi ${address(r)} | 20/10`, r.intro, '../', r.slug)}
+<body class="${r.theme}">
+<a class="skip-link" href="#main">Đến nội dung thiệp</a>
+<div class="page-wrap">
+${masthead}
+<main id="main">
+  <section class="hero" aria-labelledby="greeting-title">
+    <div class="hero-copy">
+      <p class="eyebrow enter">Một tấm thiệp dành riêng cho</p>
+      <h1 id="greeting-title" class="enter"><span class="display-name">${esc(r.displayName)}</span><span class="greeting-line">${esc(r.headline)}</span></h1>
+      <p class="intro enter">${esc(r.intro)}</p>
+      <a class="primary enter" id="open-letter" href="#letter" aria-controls="letter" aria-expanded="false"><span>Mở thư của ${r.addressName ? 'em' : 'Khiêm'}</span><span class="button-arrow" aria-hidden="true">↗</span></a>
+      <div class="hero-signoff enter"><span class="signature-small">Minh Khiêm</span><span>gửi ${esc(address(r))}</span></div>
+    </div>
+    <figure class="portrait-composition enter" style="--photo-ratio:${r.photoRatio};--photo-position:${r.photoPosition}">
+      <div class="photo-date" aria-hidden="true">20<span>10</span></div>
+      <div class="portrait-mat">
+        <span class="photo-tape" aria-hidden="true"></span>
+        <button class="portrait-button" aria-label="Xem toàn bộ ảnh của ${esc(address(r))}" aria-haspopup="dialog">
+          ${photo(r)}<span class="photo-sheen" aria-hidden="true"></span>
+        </button>
+        <figcaption><span>${esc(r.name)}</span><span class="photo-caption-hint" aria-hidden="true">Xem ảnh ↗</span></figcaption>
+      </div>
+      <span class="photo-spark" aria-hidden="true">✳</span>
+    </figure>
+  </section>
+
+  <section class="letter-area reveal" aria-label="Lá thư của Khiêm">
+    <details id="letter" class="letter-envelope">
+      <summary><span class="envelope-icon" aria-hidden="true"><i></i></span><span class="envelope-label"><span>Gửi ${esc(address(r))}</span><small>Có vài điều Khiêm muốn chúc ${r.addressName ? 'chị' : r.shortName.split(' ').at(-1)}.</small></span><span class="letter-toggle" aria-hidden="true">+</span></summary>
+      <article class="letter-content" tabindex="-1" aria-labelledby="letter-title">
+        <div class="letter-margin"><span class="eyebrow">20 tháng 10</span><h2 id="letter-title">${esc(r.letterTitle)}</h2><span class="letter-flower" aria-hidden="true">✳</span></div>
+        <div class="letter-writing"><div class="letter-body">${r.paragraphs.map((p, i) => `<p style="--order:${i}">${esc(p)}</p>`).join('')}</div>
+          <div class="signature"><span>${r.addressName ? 'Em Khiêm,' : 'Khiêm gửi,'}</span><strong>${esc(config.sender)}</strong></div>
+          <button class="text-button" id="keep-wish">Lưu lời chúc <span aria-hidden="true">↓</span></button>
+        </div>
+      </article>
+    </details>
+  </section>
+
+  <section class="little-wish reveal" aria-labelledby="wish-title">
+    <div class="wish-heading"><span aria-hidden="true">✳</span><h2 id="wish-title">Còn một lời chúc nữa.</h2></div>
+    <div class="wish-body"><p id="extra-wish" aria-live="polite">${esc(r.wish)}</p><button id="another-wish" class="text-button" data-wishes="${esc(JSON.stringify(r.extraWishes))}">Thêm một lời chúc <span aria-hidden="true">↻</span></button></div>
+  </section>
+</main>
+${footer}
+</div>
+<dialog class="photo-dialog" aria-label="Ảnh của ${esc(address(r))}"><div class="photo-dialog-bar"><span>${esc(r.name)}</span><button class="close-photo" autofocus>Đóng <span aria-hidden="true">×</span></button></div><img src="../assets/photos/${r.slug}-1440.webp" alt="${esc(r.photoAlt)}" width="${r.slug === 'bao-uyen' ? 1366 : 828}" height="${r.slug === 'bao-uyen' ? 2048 : 828}" loading="lazy"></dialog>
+<div class="petal-rain" aria-hidden="true"></div>
+${end('../')}`;
+  await fs.writeFile(`public/${r.slug}/index.html`, html);
+  const url = new URL(`${r.slug}/`, config.baseUrl).href;
+  const options = { margin: 4, errorCorrectionLevel: 'M', color: { dark: '#25342c', light: '#ffffff' } };
+  await QRCode.toFile(`public/qr/${r.slug}.png`, url, { ...options, width: 1000 });
+  await QRCode.toFile(`public/qr/${r.slug}.svg`, url, { ...options, type: 'svg' });
 }
-await fs.writeFile('public/index.html', `${head('Gửi thương | Bốn lời chúc 20/10','Bốn tấm thiệp, bốn lời chúc chân thành từ Trương Minh Khiêm.')}<body><div class="page-wrap"><header class="masthead"><span class="wordmark">gửi thương<span class="wordmark-flower" aria-hidden="true">✳</span></span><span class="occasion">NGÀY PHỤ NỮ VIỆT NAM</span><span class="header-date">20 / 10</span></header><main class="directory"><p class="eyebrow">NHỮNG ĐIỀU DỊU DÀNG</p><h1>Bốn tấm thiệp.<br>Bốn lời chúc từ Khiêm.</h1><p class="directory-intro">Mỗi người một đóa hoa, một lá thư và những lời chúc dành riêng.</p><div class="recipient-grid">${config.recipients.map(r=>`<article class="recipient-card ${r.theme}"><div class="card-heading"><span class="small-flower" aria-hidden="true">✳</span><span>Gửi ${escape(r.addressName || r.shortName)}</span></div><h2>${escape(r.name)}</h2><p>${escape(r.intro)}</p><a class="text-link" href="./${r.slug}/">Mở tấm thiệp <span aria-hidden="true">↗</span></a><details><summary>Mã QR của ${escape(r.addressName || r.shortName)}</summary><div class="qr-content"><img src="./qr/${r.slug}.png" width="200" height="200" alt="Mã QR mở thiệp của ${escape(r.addressName || r.shortName)}" loading="lazy"><a href="./qr/${r.slug}.png" download="QR-${r.slug}.png">Tải QR PNG</a><a href="./qr/${r.slug}.svg" download="QR-${r.slug}.svg">Tải QR SVG để in</a><button class="copy-link" data-url="${escape(new URL(`${r.slug}/`,config.baseUrl).href)}">Sao chép đường dẫn</button></div></details></article>`).join('')}</div></main><footer><span>Một món quà nhỏ, gửi bằng cả tấm lòng.</span><span>${escape(config.sender)}</span></footer></div><p class="toast" role="status" aria-live="polite"></p><script src="./assets/app.js" defer></script></body></html>`);
-await fs.writeFile('public/.nojekyll','');
-await fs.writeFile('public/404.html',`${head('Không tìm thấy tấm thiệp','Đường dẫn tấm thiệp chưa đúng.')}<body><main class="not-found"><p class="eyebrow">GỬI THƯƠNG</p><h1>Tấm thiệp này chưa có ở đây.</h1><p>Bạn hãy kiểm tra lại mã QR hoặc đường dẫn nhé.</p><a class="primary" href="${escape(config.baseUrl)}">Về trang thiệp</a></main></body></html>`);
-console.log('Built four greeting pages, directory, and eight QR files.');
+
+await fs.writeFile('public/index.html', `${head('Bốn tấm thiệp 20/10 | Khiêm gửi', 'Thiệp và lời chúc riêng cho Bảo Uyên, chị Kim Phượng, Huyền Dịu và chị Nguyệt Ánh.')}
+<body><a class="skip-link" href="#main">Đến các tấm thiệp</a><div class="page-wrap">${masthead}
+<main class="directory" id="main"><div class="directory-heading enter"><p class="eyebrow">Chúc mừng 20/10</p><h1>Bốn tấm thiệp,<br>gửi bốn người.</h1><p>Mỗi người một lời chúc riêng. Khiêm gửi.</p></div>
+<div class="recipient-grid">${config.recipients.map(r => `<article class="recipient-card ${r.theme} reveal"><a class="directory-photo" href="./${r.slug}/" aria-label="Mở thiệp của ${esc(address(r))}">${photo(r, './', true)}<span class="directory-photo-arrow" aria-hidden="true">↗</span></a><div class="recipient-card-copy"><p class="eyebrow">Gửi ${esc(address(r))}</p><h2><a href="./${r.slug}/">${esc(r.name)}</a></h2><p>${esc(r.intro)}</p><details class="qr-details"><summary>Mã QR & đường dẫn <span aria-hidden="true">+</span></summary><div class="qr-content"><img src="./qr/${r.slug}.png" width="180" height="180" alt="Mã QR mở thiệp của ${esc(address(r))}" loading="lazy"><div class="qr-actions"><a href="./qr/${r.slug}.png" download="QR-${r.slug}.png">Tải QR PNG ↓</a><a href="./qr/${r.slug}.svg" download="QR-${r.slug}.svg">Tải SVG để in ↓</a><button class="copy-link text-button" data-url="${esc(new URL(`${r.slug}/`, config.baseUrl).href)}">Sao chép đường dẫn</button></div></div></details></div></article>`).join('')}</div>
+</main>${footer}</div>${end('./')}`);
+await fs.writeFile('public/.nojekyll', '');
+await fs.writeFile('public/404.html', `${head('Không tìm thấy tấm thiệp', 'Kiểm tra lại đường dẫn tấm thiệp.')}<body><main class="not-found"><p class="eyebrow">Khiêm gửi</p><h1>Tấm thiệp này chưa có ở đây.</h1><p>Bạn kiểm tra lại đường dẫn nhé.</p><a class="primary" href="${esc(config.baseUrl)}">Về các tấm thiệp <span aria-hidden="true">↗</span></a></main>${end('./')}`);
+console.log('Built four photo greeting pages, directory, and QR codes.');

@@ -9,7 +9,13 @@ Website tĩnh chúc mừng ngày Phụ nữ Việt Nam, từ Trương Minh Khiê
 - Huyền Dịu: `huyen-diu/`
 - Nguyệt Ánh: `nguyet-anh/`
 
-Mỗi trang có lời chúc riêng, mở thư, hiệu ứng cánh hoa, nút lưu lời chúc, giao diện điện thoại, chế độ sáng/tối và hỗ trợ giảm chuyển động. Các trang cá nhân không liên kết sang thiệp của người khác. Đây là website công khai, không có mật khẩu; người có đường dẫn có thể đọc nội dung.
+Mỗi trang có ảnh riêng, mở thư, cánh hoa khi mở, ảnh nghiêng theo con trỏ, xem ảnh đầy đủ, thêm lời chúc và lưu lá thư. Bố cục có phiên bản điện thoại và máy tính, hỗ trợ sáng/tối và giảm chuyển động. Các trang cá nhân không liên kết sang thiệp của người khác. Đây là website công khai, không có mật khẩu; người có đường dẫn có thể đọc nội dung.
+
+Ảnh hiển thị được tối ưu thành WebP, không thay đổi khuôn mặt hay màu sắc. Nút xem ảnh mở toàn bộ khung hình. Font Be Vietnam Pro và Noto Serif hỗ trợ tiếng Việt và được lưu cùng website.
+
+## Thay ảnh
+
+Đặt các ảnh gốc dưới `source-photos/` với tên `bao-uyen.png`, `kim-phuong.png`, `huyen-diu.png`, `nguyet-anh.png`. Chạy `node scripts/prepare-photos.mjs` để tạo ảnh WebP 480/960/1440, rồi build và đẩy thư mục `public` lên GitHub. Ảnh gốc không được đưa vào Git, ảnh WebP được đưa cùng website.
 
 ## Chỉnh nội dung
 
