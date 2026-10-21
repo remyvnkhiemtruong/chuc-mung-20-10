@@ -13,11 +13,24 @@ const head = (title, description, prefix = './', photo) => `<!doctype html>
   ${photo ? `<meta property="og:image" content="${config.baseUrl}assets/photos/${photo}-960.webp">` : ''}
   <title>${esc(title)}</title><link rel="icon" href="${prefix}assets/flower.svg" type="image/svg+xml">
   <link rel="preload" href="${prefix}assets/fonts/be-vietnam-pro-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="${prefix}assets/fonts.css"><link rel="stylesheet" href="${prefix}assets/style.css?v=3">
+  <link rel="stylesheet" href="${prefix}assets/fonts.css"><link rel="stylesheet" href="${prefix}assets/style.css?v=5">
+  <link rel="stylesheet" href="${prefix}assets/flowers.css?v=5">
 </head>`;
-const masthead = `<header class="masthead"><span class="wordmark">Khiêm gửi<span aria-hidden="true">✳</span></span><span class="occasion">Ngày Phụ nữ Việt Nam</span><span class="header-date">20.10</span></header>`;
+const flowerColors = ['#ef79ad', '#f4c045', '#af84db', '#70bca4', '#79a9e2', '#f4956b'];
+const bloom = (color, size = 58) => `<span class="bloom" style="--flower-color:${color};--flower-size:${size}px"><span class="flower-petals">${Array.from({length:8}, (_, i) => `<i class="flower-petal" style="--i:${i}"></i>`).join('')}</span><i class="flower-heart"></i></span>`;
+const garden = r => `<section class="flower-garden reveal" id="flower-garden" aria-labelledby="garden-title">
+  <div class="garden-copy"><p class="eyebrow">Hoa tặng ${esc(address(r))}</p><h2 id="garden-title">Thêm hoa, thêm vui.</h2>
+    <p>Chọn một màu, rồi chạm vào vườn để thêm hoa. Hoặc nhận cả một bó nhé.</p>
+    <div class="garden-actions"><button class="flower-action" data-flower-action="bouquet"><span aria-hidden="true">✿</span>Nhận bó hoa</button><button class="flower-action" data-flower-action="shower"><span aria-hidden="true">✧</span>Mưa hoa</button></div>
+    <fieldset class="flower-colors"><legend>Màu hoa</legend><label><input type="radio" name="flower-color" value="mix" checked aria-label="Nhiều màu"><span class="color-dot rainbow-dot"></span></label>${[['#ef79ad','Hồng'],['#f4c045','Vàng'],['#af84db','Tím'],['#70bca4','Xanh lá'],['#79a9e2','Xanh dương']].map(([color,name])=>`<label><input type="radio" name="flower-color" value="${color}" aria-label="${name}"><span class="color-dot" style="--swatch:${color}"></span></label>`).join('')}</fieldset>
+    <p class="garden-message" id="garden-message" role="status">Một vườn hoa nhỏ Khiêm gửi ${esc(address(r))}.</p>
+  </div>
+  <div class="garden-stage" aria-label="Vườn hoa tương tác"><div class="planted-flowers" aria-hidden="true">${Array.from({length:7},(_,i)=>`<span class="garden-flower" style="--x:${14+i*12}%;--height:${[170,230,195,265,205,240,175][i]}px;--lean:${[-10,-7,-4,0,4,7,10][i]}deg;--bouquet-angle:${(i-3)*12}deg"><i class="garden-stem"></i>${bloom(flowerColors[i%6],[48,61,55,67,56,60,48][i])}</span>`).join('')}</div><span class="garden-ribbon" aria-hidden="true"></span><button id="plant-flower" class="plant-flower">Trồng thêm hoa +</button></div>
+  <noscript>Vườn hoa đã ở đây. Bật JavaScript để trồng thêm hoa và mở bó hoa.</noscript>
+</section>`;
+const masthead = `<header class="masthead"><span class="wordmark">Khiêm gửi<span aria-hidden="true">✳</span></span><span class="occasion">Ngày Phụ nữ Việt Nam</span><div class="header-controls"><button class="effects-toggle" id="effects-toggle" aria-pressed="true" aria-label="Hiệu ứng bật, nhấn để tắt chuyển động">Hiệu ứng bật</button><span class="header-date">20.10</span></div></header>`;
 const footer = `<footer><span>Chúc mừng ngày Phụ nữ Việt Nam.</span><span>${esc(config.sender)}</span></footer>`;
-const end = prefix => `<p class="toast" role="status" aria-live="polite"></p><script src="${prefix}assets/app.js?v=3" defer></script></body></html>`;
+const end = prefix => `<p class="toast" role="status" aria-live="polite"></p><script src="${prefix}assets/app.js?v=5" defer></script><script src="${prefix}assets/flowers.js?v=5" defer></script></body></html>`;
 const photo = (r, prefix = '../', lazy = false) => `<img
   src="${prefix}assets/photos/${r.slug}-960.webp"
   srcset="${prefix}assets/photos/${r.slug}-480.webp 480w, ${prefix}assets/photos/${r.slug}-960.webp 960w"
@@ -41,9 +54,10 @@ ${masthead}
       <p class="intro enter">${esc(r.intro)}</p>
       <a class="primary enter" id="open-letter" href="#letter" aria-controls="letter" aria-expanded="false"><span>Mở thư của ${r.addressName ? 'em' : 'Khiêm'}</span><span class="button-arrow" aria-hidden="true">↗</span></a>
       <div class="hero-signoff enter"><span class="signature-small">Minh Khiêm</span><span>gửi ${esc(address(r))}</span></div>
+      <div class="hero-actions enter"><button class="flower-action" data-flower-action="bouquet"><span aria-hidden="true">✿</span>Nhận bó hoa</button><button class="flower-action" data-flower-action="shower"><span aria-hidden="true">✧</span>Mưa hoa</button></div>
     </div>
     <figure class="portrait-composition enter" style="--photo-ratio:${r.photoRatio};--photo-position:${r.photoPosition}">
-      <div class="photo-date" aria-hidden="true">20<span>10</span></div>
+      
       <div class="portrait-mat">
         <span class="photo-tape" aria-hidden="true"></span>
         <button class="portrait-button" aria-label="Xem toàn bộ ảnh của ${esc(address(r))}" aria-haspopup="dialog">
@@ -51,7 +65,7 @@ ${masthead}
         </button>
         <figcaption><span>${esc(r.name)}</span><span class="photo-caption-hint" aria-hidden="true">Xem ảnh ↗</span></figcaption>
       </div>
-      <span class="photo-spark" aria-hidden="true">✳</span>
+      <div class="photo-garland" aria-hidden="true">${bloom("#ef79ad",70)}${bloom("#f4c045",62)}${bloom("#af84db",44)}</div>
     </figure>
   </section>
 
@@ -72,11 +86,12 @@ ${masthead}
     <div class="wish-heading"><span aria-hidden="true">✳</span><h2 id="wish-title">Còn một lời chúc nữa.</h2></div>
     <div class="wish-body"><p id="extra-wish" aria-live="polite">${esc(r.wish)}</p><button id="another-wish" class="text-button" data-wishes="${esc(JSON.stringify(r.extraWishes))}">Thêm một lời chúc <span aria-hidden="true">↻</span></button></div>
   </section>
+${garden(r)}
 </main>
 ${footer}
 </div>
 <dialog class="photo-dialog" aria-label="Ảnh của ${esc(address(r))}"><div class="photo-dialog-bar"><span>${esc(r.name)}</span><button class="close-photo" autofocus>Đóng <span aria-hidden="true">×</span></button></div><img src="../assets/photos/${r.slug}-1440.webp" alt="${esc(r.photoAlt)}" width="${r.slug === 'bao-uyen' ? 1366 : 828}" height="${r.slug === 'bao-uyen' ? 2048 : 828}" loading="lazy"></dialog>
-<div class="petal-rain" aria-hidden="true"></div>
+<div class="petal-rain" aria-hidden="true"></div><div class="flower-burst-layer" aria-hidden="true"></div>
 ${end('../')}`;
   await fs.writeFile(`public/${r.slug}/index.html`, html);
   const url = new URL(`${r.slug}/`, config.baseUrl).href;

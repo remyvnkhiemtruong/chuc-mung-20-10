@@ -1,4 +1,5 @@
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+function motionOff() { return reducedMotion.matches || document.documentElement.dataset.effects === 'off'; }
 const openButton = document.querySelector('#open-letter');
 const letter = document.querySelector('#letter');
 let toastTimer;
@@ -13,13 +14,17 @@ function toast(message) {
 
 function celebrate(count = 30) {
   const rain = document.querySelector('.petal-rain');
-  if (!rain || reducedMotion.matches) return;
+  if (!rain || motionOff()) return;
   clearTimeout(petalTimer);
   rain.replaceChildren();
   const petals = document.createDocumentFragment();
   for (let i = 0; i < count; i++) {
     const petal = document.createElement('i');
     petal.className = 'falling-petal';
+    const colors = ['#ef79ad', '#f4c045', '#af84db', '#70bca4', '#79a9e2', '#f4956b'];
+    petal.style.setProperty('--fall-color', colors[i % colors.length]);
+    if (i % 6 === 0 && typeof createBloom === 'function') { petal.classList.add('falling-flower'); petal.append(createBloom(colors[i % colors.length], 24)); }
+    else if (i % 3 === 0) petal.classList.add('confetti-ribbon');
     petal.style.setProperty('--left', `${Math.random() * 100}%`);
     petal.style.setProperty('--delay', `${Math.random() * .7}s`);
     petal.style.setProperty('--duration', `${3 + Math.random() * 1.5}s`);
@@ -38,7 +43,7 @@ openButton?.addEventListener('click', event => {
   letter.closest('.reveal')?.classList.add('is-visible');
   const article = letter.querySelector('.letter-content');
   article.focus({ preventScroll: true });
-  letter.scrollIntoView({ behavior: reducedMotion.matches ? 'instant' : 'smooth', block: 'start' });
+  letter.scrollIntoView({ behavior: motionOff() ? 'instant' : 'smooth', block: 'start' });
 });
 
 letter?.addEventListener('toggle', () => {
@@ -98,7 +103,7 @@ const finePointer = matchMedia('(hover: hover) and (pointer: fine)');
 if (portrait) {
   let frame;
   portrait.addEventListener('pointermove', event => {
-    if (reducedMotion.matches || !finePointer.matches) return;
+    if (motionOff() || !finePointer.matches) return;
     cancelAnimationFrame(frame);
     frame = requestAnimationFrame(() => {
       const rect = portrait.getBoundingClientRect();
@@ -127,7 +132,7 @@ if ('IntersectionObserver' in window) {
 }
 
 reducedMotion.addEventListener('change', () => {
-  if (reducedMotion.matches) {
+  if (motionOff()) {
     document.querySelector('.petal-rain')?.replaceChildren();
     portrait?.style.setProperty('--tilt-x', '0deg');
     portrait?.style.setProperty('--tilt-y', '0deg');
